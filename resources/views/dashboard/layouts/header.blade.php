@@ -38,7 +38,7 @@
                 <a class="nav-link dropdown-toggle hide-arrow p-0" href="javascript:void(0);"
                    data-bs-toggle="dropdown">
                     <div class="avatar avatar-online">
-                        <img src="{{ auth()->user()->image ? asset(auth()->user()->image) : asset('dashboard/images/logo.png') }}"
+                        <img src="{{ auth()->user()->image ? asset(auth()->user()->image) : $logoPath2 }}"
                              alt class="rounded-circle" />
                     </div>
                 </a>
@@ -48,7 +48,7 @@
                             <div class="d-flex align-items-center">
                                 <div class="flex-shrink-0 me-2">
                                     <div class="avatar avatar-online">
-                                        <img src="{{ auth()->user()->image ? asset(auth()->user()->image) : asset('dashboard/images/logo.png') }}"
+                                        <img src="{{ auth()->user()->image ? asset(auth()->user()->image) : $logoPath2 }}"
                                              alt class="rounded-circle" />
                                     </div>
                                 </div>

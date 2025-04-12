@@ -56,7 +56,7 @@
                     <div class="card mb-0">
                         <div class="card-body">
                             <a href="javascript:void(0);" class="brand-logo d-flex align-items-center text-decoration-none">
-                                <img src="{{ asset('dashboard/images/logo.png') }}" height="80" alt="Logo" class="mr-1">
+                                <img src="{{ $logoPath }}"  width="270px" alt="Logo" class="mr-1">
 {{--                                <h2 class="brand-text text-primary mb-0">{{__('auth.Effect')}}</h2>--}}
                             </a>
                             <h4 class="card-title mb-1">Welcome to Ocean - IT ! 👋</h4>

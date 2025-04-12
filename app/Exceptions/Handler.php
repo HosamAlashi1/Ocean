@@ -33,13 +33,7 @@ class Handler extends ExceptionHandler
     public function render($request, Throwable $exception)
     {
         if ($exception instanceof NotFoundHttpException) {
-            if (!($request->is('ar/admin*') || $request->is('en/admin*'))) {
-                return response()->view('frontEnd.error', [], 404);
-            }
-
-//            return response()->view('fronted.error', [], 404);
+            return parent::render($request, $exception);
         }
-
-        return parent::render($request, $exception);
     }
 }

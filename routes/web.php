@@ -36,6 +36,11 @@ use Mcamara\LaravelLocalization\Facades\LaravelLocalization;
 */
 
 
+// Redirect the root URL to /admin/login
+Route::prefix(LaravelLocalization::setLocale())->get('/', function () {
+    return redirect(LaravelLocalization::setLocale() . '/admin/login');
+});
+
 Route::group(
     [
         'prefix' => LaravelLocalization::setLocale().'/admin/',
@@ -50,23 +55,7 @@ Route::group(
 
 });
 
-Route::group(
-    [
-        'prefix' => LaravelLocalization::setLocale().'/',
-        'middleware' => [ 'localeSessionRedirect', 'localizationRedirect','localeViewPath' ]
-    ], function(){
-    Route::get('/', [HomeController::class,'index'])->name('front.index');
-    Route::post('/customer-store', [HomeController::class,'store'])->name('front.customer.store');
-    Route::get('about', [AboutController::class,'index'])->name('front.about');
-    Route::get('blogs', [BlogController::class,'index'])->name('front.blogs');
-    Route::get('blog/{id}/{key?}', [BlogController::class,'show'])->name('front.blog');
-    Route::get('contact', [ContactController::class,'index'])->name('front.contact');
-//    Route::get('services/{id?}', [ServicesController::class,'index'])->name('front.services');
-    Route::get('service/{id}/{name}', [ServicesController::class,'show'])->name('front.service.show');
-    Route::get('/services/{id}/works', [ServicesController::class, 'getWorksByService'])->name('services.works');
-    Route::get('terms', [TermsController::class,'index'])->name('front.terms');
 
-});
 //==============Dashboard================
 Route::group(
     [

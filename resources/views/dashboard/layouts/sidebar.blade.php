@@ -2,7 +2,7 @@
   <div class="app-brand demo">
     <a href="#" class="app-brand-link">
 
-        <img src="{{ asset('dashboard/images/logo.png') }}" height="45" alt="Logo" class="mr-1">
+        <img src="{{ $logoPath }}" height="78" alt="Logo" class="mr-1" width="143px">
 
 
         {{--      <span class="app-brand-text demo  menu-text fw-bold">Effect</span>--}}

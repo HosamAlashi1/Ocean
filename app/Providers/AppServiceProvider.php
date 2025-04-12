@@ -29,6 +29,8 @@ class AppServiceProvider extends ServiceProvider
     {
         $locale = session('locale', config('app.locale'));
         app()->setLocale($locale);
+        view()->share('logoPath', asset('dashboard/images/logo.png'));
+        view()->share('logoPath2', asset('dashboard/images/logo2.png'));
         Blog::observe(BlogObserver::class);
         Service::observe(ServiceObserver::class);
         Builder::useVite();

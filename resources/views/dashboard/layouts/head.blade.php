@@ -9,7 +9,7 @@
     <meta name="description" content="" />
     <meta name="csrf-token" content="{{ csrf_token() }}">
     <!-- Favicon -->
-    <link rel="icon" type="image/x-icon" href="{{URL::asset('dashboard/images/logo.png')}}" />
+    <link rel="icon" type="image/x-icon" href="{{$logoPath2}}" />
 
     <!-- Fonts -->
     <link rel="preconnect" href="https://fonts.googleapis.com" />
