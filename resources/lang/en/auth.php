@@ -7,5 +7,5 @@ return[
     'Please sign-in to your account and start the adventure'=>'Please sign-in to your account and start the adventure',
     'Welcome to Effect!'=>'Welcome to Effect!',
     'Effect'=>'Effect',
-    'Login Page - Effect Dashboard'=>'Login Page - Effect Dashboard',
+    'Login Page - Ocean Dashboard'=>'Login Page - Ocean Dashboard',
 ];

@@ -7,6 +7,6 @@ return [
     'Please sign-in to your account and start the adventure' => 'يرجى تسجيل الدخول إلى حسابك وبدء المغامرة',
     'Welcome to Effect!' => 'مرحبًا بك في Effect!',
     'Effect' => 'Effect',
-    'Login Page - Effect Dashboard' => 'صفحة تسجيل الدخول - لوحة التحكم في Effect',
+    'Login Page - Ocean Dashboard'=>' تسجيل الدخول - لوحة تحكم Ocean',
 ];
 
