@@ -1,0 +1,18 @@
+//  colors
+
+:root {
+  --main-color: #21D0ED;
+  --main-hover: #0D0D0D;
+  --sec-color: #262626;
+  --black-color: #000;
+  --white-color: #fff;
+
+  --border-radius: 24px;
+  font-size: 16px;
+}
+
+$main: var(--main-color);
+$hover: var(--main-hover);
+$sec: var(--sec-color);
+$black: var(--black-color);
+$white: var(--white-color);
