@@ -13,9 +13,16 @@ class ContactMessageController extends Controller
         return $dataTable->render('dashboard.contact_messages.index');
     }
 
-    public function destroy(ContactMessage $customer)
+    public function destroy(ContactMessage $contactMessage)
     {
-        $customer->delete();
+        $contactMessage->delete();
         return response()->json('success');
     }
+
+    public function markAllAsRead()
+    {
+        ContactMessage::where('is_read', false)->update(['is_read' => true]);
+        return response()->json(['success' => true]);
+    }
+
 }

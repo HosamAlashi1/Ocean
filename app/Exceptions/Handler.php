@@ -3,6 +3,7 @@
 namespace App\Exceptions;
 
 use Illuminate\Foundation\Exceptions\Handler as ExceptionHandler;
+use Symfony\Component\HttpKernel\Exception\MethodNotAllowedHttpException;
 use Throwable;
 use Symfony\Component\HttpKernel\Exception\NotFoundHttpException;
 
@@ -33,7 +34,22 @@ class Handler extends ExceptionHandler
     public function render($request, Throwable $exception)
     {
         if ($exception instanceof NotFoundHttpException) {
-            return parent::render($request, $exception);
+            // You can return a custom 404 view or JSON response here
+
+            if ($request->is('api/*')) {
+                return sendError('Route not found.', [], 404);
+            }
+
+            if ($exception instanceof MethodNotAllowedHttpException) {
+                return sendError('Method not allowed on this route.', [], 405);
+            }
+
+            return response()->view('errors.404', [], 404);
+            // Or fallback to default:
+            // return parent::render($request, $exception);
         }
+
+        return parent::render($request, $exception); // Always handle other exceptions
     }
+
 }

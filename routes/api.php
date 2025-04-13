@@ -1,5 +1,12 @@
 <?php
 
+use App\Http\Controllers\Api\AboutController;
+use App\Http\Controllers\Api\BlogController;
+use App\Http\Controllers\Api\HomeController;
+use App\Http\Controllers\Api\HowWeWorkController;
+use App\Http\Controllers\Api\ProjectController;
+use App\Http\Controllers\Api\SubscribeController;
+use App\Http\Controllers\Api\ContactMessageController;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
 
@@ -14,6 +21,19 @@ use Illuminate\Support\Facades\Route;
 |
 */
 
-Route::middleware('auth:sanctum')->get('/user', function (Request $request) {
-    return $request->user();
-});
+
+Route::get('/',[HomeController::class,'index']);
+
+Route::post('/join-our-weekly',[SubscribeController::class,'add']);
+
+Route::get('/projects',[ProjectController::class,'list']);
+
+Route::get('/blogs',[BlogController::class,'list']);
+Route::get('/blog-details/{id}',[BlogController::class,'details']);
+
+Route::get('/about',[AboutController::class,'list']);
+
+Route::get('/how-it-work',[HowWeWorkController::class,'list']);
+
+Route::get('/contact-us',[ContactMessageController::class,'list']);
+Route::post('/contact-us',[ContactMessageController::class,'add']);

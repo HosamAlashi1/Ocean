@@ -20,7 +20,7 @@ class BlogController extends Controller
     public function index(BlogsDataTable $dataTable)
     {
         $tags = \App\Models\Tag::all(); // You can sort this if needed
-        return $dataTable->render('dashboard.blogs.index', compact('dataTable', 'tags'));
+        return $dataTable->render('dashboard.blogs.index', compact( 'tags'));
     }
 
 

@@ -8,6 +8,7 @@ use App\Http\Controllers\Dashboard\MemberController;
 use App\Http\Controllers\Dashboard\ProcessController;
 use App\Http\Controllers\Dashboard\ServiceController;
 use App\Http\Controllers\Dashboard\SettingController;
+use App\Http\Controllers\Dashboard\SubscribeController;
 use App\Http\Controllers\Dashboard\TagController;
 use App\Http\Controllers\Dashboard\WorkController;
 use App\Http\Controllers\Frontend\AboutController;
@@ -79,7 +80,12 @@ Route::group(
         Route::get('/services/update-our_service/{id}', [ServiceController::class, 'update_our_service'])->name('update-our_service-status');
 
         Route::get('contact-messages',[ContactMessageController::class,'index'])->name('contact-messages.index');
-        Route::delete('contact-messages/{ContactMessage}',[ContactMessageController::class,'destroy'])->name('contact-messages.destroy');
+        Route::delete('contact-messages/{contactMessage}',[ContactMessageController::class,'destroy'])->name('contact-messages.destroy');
+        Route::post('contact-messages/mark-read', [ContactMessageController::class, 'markAllAsRead'])->name('contact-messages.markRead');
+
+        Route::get('subscribers',[SubscribeController::class,'index'])->name('subscribers.index');
+        Route::delete('subscriber/{subscriber}',[SubscribeController::class,'destroy'])->name('subscribers.destroy');
+        Route::post('subscribers/mark-read', [SubscribeController::class, 'markAllAsRead'])->name('subscribers.markRead');
 
         Route::resource('member',MemberController::class);
 
@@ -101,51 +107,4 @@ Route::group(
     });
 
 });
-
-// ====================== SEO ===================
-//Route::get('/sitemap.xml', function () {
-////    return 'a';
-//    $sitemap = Sitemap::create();
-//
-//    // احصل على جميع اللغات المدعومة
-//    $locales = LaravelLocalization::getSupportedLocales();
-//
-//    // أضف الروابط الثابتة بجميع اللغات
-//    foreach ($locales as $locale => $details) {
-//        $sitemap->add(Url::create(LaravelLocalization::localizeURL(route('front.index', [], false), $locale)));
-//        $sitemap->add(Url::create(LaravelLocalization::localizeURL(route('front.about', [], false), $locale)));
-//        $sitemap->add(Url::create(LaravelLocalization::localizeURL(route('front.contact', [], false), $locale)));
-//        $sitemap->add(Url::create(LaravelLocalization::localizeURL(route('front.terms', [], false), $locale)));
-//    }
-//
-//    // أضف الروابط الديناميكية للمدونات بجميع اللغات
-//    $blogs = \App\Models\Blog::all();
-//    foreach ($blogs as $blog) {
-//        foreach ($locales as $locale => $details) {
-//            $sitemap->add(
-//                Url::create(LaravelLocalization::localizeURL(route('front.blog', [$blog->id], false), $locale))
-//                    ->setLastModificationDate($blog->updated_at)
-//            );
-//        }
-//    }
-//
-//    // أضف الروابط الديناميكية للخدمات بجميع اللغات
-//    $services = \App\Models\Service::all();
-//    foreach ($services as $service) {
-//        foreach ($locales as $locale => $details) {
-//            $sitemap->add(
-//                Url::create(LaravelLocalization::localizeURL(route('front.service.show', [$service->id, $service->name_en], false), $locale))
-//                    ->setLastModificationDate($service->updated_at)
-//            );
-//            $sitemap->add(
-//                Url::create(LaravelLocalization::localizeURL(route('services.works', ['id' => $service->id], false), $locale))
-//            );
-//        }
-//    }
-//
-//    return $sitemap->writeToFile(public_path('sitemap.xml'));
-//});
-
-
-
 

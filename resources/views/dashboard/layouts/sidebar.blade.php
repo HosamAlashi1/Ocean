@@ -41,10 +41,29 @@
                 <div>{{__('general.Admins')}}</div>
             </a>
         </li>
-        <li class="menu-item {{ Route::is('contact-messages.*') ? 'active' : '' }}">
+        <li id="contact-messages-link" data-url="{{ route('contact-messages.markRead') }}"
+            class="menu-item {{ Route::is('contact-messages.*') ? 'active' : '' }}">
             <a href="{{ route('contact-messages.index') }}" class="menu-link side-sclaex">
-                <i class="menu-icon tf-icons ti ti-user"></i>
-                <div>{{__('general.Contact Messages')}}</div>
+                <i class="menu-icon tf-icons ti ti-message-dots"></i>
+                <div>
+                    {{ __('general.Contact Messages') }}
+                    @if($unreadMessagesCount > 0)
+                        <span class="badge bg-danger ms-2" id="contact-badge">{{ $unreadMessagesCount }}</span>
+                    @endif
+                </div>
+            </a>
+        </li>
+
+        <li id="subscribers-link" data-url="{{ route('subscribers.markRead') }}"
+            class="menu-item {{ Route::is('subscribers.*') ? 'active' : '' }}">
+            <a href="{{ route('subscribers.index') }}" class="menu-link side-sclaex">
+                <i class="menu-icon tf-icons ti ti-mail-opened"></i>
+                <div>
+                    {{ __('general.subscribers') }}
+                    @if($unreadSubscribersCount > 0)
+                        <span class="badge bg-danger ms-2" id="subscribers-badge">{{ $unreadSubscribersCount }}</span>
+                    @endif
+                </div>
             </a>
         </li>
         <li class="menu-item {{ Route::is('member.*') ? 'active' : '' }}">

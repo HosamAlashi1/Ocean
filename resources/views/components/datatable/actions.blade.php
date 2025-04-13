@@ -6,8 +6,7 @@
 
 @if($routeDelete)
     <button type="button" class="btn rounded rounded-2 btn-danger btn-sm delete-btn mb-2"
-            data-url="{{ route($routeDelete, $id) }}"
-            data-name="{{ $name }}">
+            data-url="{{ route($routeDelete, $id) }}">
         <i class="bi bi-trash-fill"></i>
     </button>
 @endif

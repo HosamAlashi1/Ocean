@@ -56,7 +56,43 @@
         });
 
     </script>
+    <script>
+        window.markAsReadType = '{{ Route::is("contact-messages.index") ? "contact" : (Route::is("subscribers.index") ? "subscriber" : "") }}';
+    </script>
+    <script>
+        document.addEventListener('DOMContentLoaded', function () {
+            const type = window.markAsReadType;
+            if (!type) return;
 
+            let url = '';
+            if (type === 'contact') {
+                url = "{{ route('contact-messages.markRead') }}";
+            } else if (type === 'subscriber') {
+                url = "{{ route('subscribers.markRead') }}";
+            }
+
+            if (url) {
+                fetch(url, {
+                    method: 'POST',
+                    headers: {
+                        'Content-Type': 'application/json',
+                        'X-CSRF-TOKEN': '{{ csrf_token() }}',
+                    },
+                })
+                    .then(res => res.json())
+                    .then(data => {
+                        console.log(type + " marked as read.");
+                        // Optionally remove badge here using JS
+                        if (type === 'contact') {
+                            document.getElementById('contact-badge')?.remove();
+                        } else if (type === 'subscriber') {
+                            document.getElementById('subscribers-badge')?.remove();
+                        }
+                    })
+                    .catch(err => console.error("Mark as read failed", err));
+            }
+        });
+    </script>
 
 
 

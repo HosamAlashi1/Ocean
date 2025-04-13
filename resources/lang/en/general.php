@@ -18,6 +18,7 @@ return[
     'Update'=>'Update',
     'Blogs'=>'Blogs',
     'tags'=>'Tags',
+    'subscribers'=>'subscribe requests',
     'Additional Information' => 'Additional Information',
     'Additional Details' => 'Additional Details',
     'Add Detail' => 'Add Detail',

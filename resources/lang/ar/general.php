@@ -14,6 +14,7 @@ return [
     'Reset' => 'إعادة تعيين',
     'Optional'=>'اختياري',
     'Update Tag'=>'تحديث الوسم',
+    'subscribers'=>'طلبات اشتراك',
     'Submit' => 'إرسال',
     'Update Admin' => 'تحديث المسؤول',
     'Update' => 'تحديث',
