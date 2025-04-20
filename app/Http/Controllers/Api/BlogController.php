@@ -110,7 +110,7 @@ class BlogController extends Controller
             ->find($id);
 
         if (!$blog) {
-            return sendError('Blog not found.', [], 404);
+            return sendError('Blog not found.', [], 400);
         }
 
         $related_blogs = Blog::where('id', '!=', $id)

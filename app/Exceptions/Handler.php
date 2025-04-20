@@ -44,9 +44,8 @@ class Handler extends ExceptionHandler
                 return sendError('Method not allowed on this route.', [], 405);
             }
 
-            return response()->view('errors.404', [], 404);
             // Or fallback to default:
-            // return parent::render($request, $exception);
+             return parent::render($request, $exception);
         }
 
         return parent::render($request, $exception); // Always handle other exceptions
