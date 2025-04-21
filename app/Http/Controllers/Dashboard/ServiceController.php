@@ -26,7 +26,7 @@ class ServiceController extends Controller
 
     public function store(ServiceRequest $request)
     {
-        try {
+//        try {
             if ($request->has('photo')) {
                 $image_path = $this->uploadImage('admin', $request->photo);
             }
@@ -41,10 +41,10 @@ class ServiceController extends Controller
 
             session()->flash('success', __('messages.created successfully.'));
             return redirect()->route('services.index');
-        } catch (\Exception $ex) {
-            session()->flash('error', __('messages.An error occurred while creating the service. Please try again.'));
-            return redirect()->route('services.create');
-        }
+//        } catch (\Exception $ex) {
+//            session()->flash('error', __('messages.An error occurred while creating the service. Please try again.'));
+//            return redirect()->route('services.create');
+//        }
     }
 
     public function edit($id)
