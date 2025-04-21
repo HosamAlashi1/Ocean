@@ -21,19 +21,20 @@ class ProcessRequest extends FormRequest
      */
     public function rules(): array
     {
-        return [
+        $rules =  [
             'name' => 'required|string|max:255',
             'name_ar' => 'required|string|max:255',
             'desc' => 'required|string|min:10',
             'desc_ar' => 'required|string|min:10',
         ];
 
-        if ($this->route()->getName() === 'services.update') {
+        if ($this->route()->getName() === 'process.update') {
             $rules['photo'] = 'nullable|image|mimes:jpeg,png,jpg,gif,svg';
         } else {
             $rules['photo'] = 'required|image|mimes:jpeg,png,jpg,gif,svg';
         }
 
+        return $rules;
     }
 
     public function messages()
