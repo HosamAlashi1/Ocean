@@ -16,9 +16,9 @@ class WorkRequest extends FormRequest
             'service_id' => 'required|exists:services,id',
         ];
         if ($this->route()->getName() === 'work.update') {
-            $rules['photo'] = 'nullable|image|mimes:jpeg,png,jpg,gif,svg|max:2048';
+            $rules['photo'] = 'nullable|image|mimes:jpeg,png,jpg,gif,svg';
         } else {
-            $rules['photo'] = 'required|image|mimes:jpeg,png,jpg,gif,svg|max:2048';
+            $rules['photo'] = 'required|image|mimes:jpeg,png,jpg,gif,svg';
         }
         return $rules;
     }

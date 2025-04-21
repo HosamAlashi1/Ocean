@@ -28,10 +28,10 @@ class ServiceRequest extends FormRequest
             'title_en' => 'required',
         ];
 
-        if ($this->route()->getName() === 'services.update') {
-            $rules['photo'] = 'nullable|image|mimes:jpeg,png,jpg,gif,svg|max:2048';
+        if ($this->route()->getName() === 'process.update') {
+            $rules['photo'] = 'nullable|image|mimes:jpeg,png,jpg,gif,svg';
         } else {
-            $rules['photo'] = 'required|image|mimes:jpeg,png,jpg,gif,svg|max:2048';
+            $rules['photo'] = 'required|image|mimes:jpeg,png,jpg,gif,svg';
         }
         return $rules;
     }

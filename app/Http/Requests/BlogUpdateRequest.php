@@ -29,7 +29,7 @@ class BlogUpdateRequest extends FormRequest
             'date' => 'required|date',
             'by' => 'required|string|max:255',
             'blog_type_id' => 'required|exists:blog__types,id',
-            'photo' => 'nullable|image|mimes:jpeg,png,jpg,gif,svg|max:2048',
+            'photo' => 'nullable|image|mimes:jpeg,png,jpg,gif,svg',
         ];
     }
 

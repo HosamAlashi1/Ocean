@@ -33,15 +33,15 @@ class BlogRequest extends FormRequest
             'tags' => 'nullable|array',
             'tags.*' => 'nullable|exists:tags,id',
             'details' => 'nullable|array',
-            'details.*.url' => 'nullable|url|max:2048',
+            'details.*.url' => 'nullable|url',
             'details.*.key_url_en' => 'nullable|string|max:255',
             'details.*.key_url_ar' => 'nullable|string|max:255',
         ];
 
         if ($this->route()->getName() === 'blog.update') {
-            $rules['photo'] = 'nullable|image|mimes:jpeg,png,jpg,gif,svg|max:2048';
+            $rules['photo'] = 'nullable|image|mimes:jpeg,png,jpg,gif,svg';
         } else {
-            $rules['photo'] = 'required|image|mimes:jpeg,png,jpg,gif,svg|max:2048';
+            $rules['photo'] = 'required|image|mimes:jpeg,png,jpg,gif,svg';
         }
 
         return $rules;

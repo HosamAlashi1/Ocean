@@ -29,11 +29,11 @@ class ProcessRequest extends FormRequest
         ];
 
         if ($this->route()->getName() === 'services.update') {
-            $rules['photo'] = 'nullable|image|mimes:jpeg,png,jpg,gif,svg|max:2048';
+            $rules['photo'] = 'nullable|image|mimes:jpeg,png,jpg,gif,svg';
         } else {
-            $rules['photo'] = 'required|image|mimes:jpeg,png,jpg,gif,svg|max:2048';
+            $rules['photo'] = 'required|image|mimes:jpeg,png,jpg,gif,svg';
         }
-    
+
     }
 
     public function messages()

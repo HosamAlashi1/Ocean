@@ -27,13 +27,13 @@ class MemberRequest extends FormRequest
             'job_name' => 'required|string|max:255',
             'job_name_ar' => 'required|string|max:255',
         ];
-    
+
         if ($this->route()->getName() === 'member.update') {
-            $rules['photo'] = 'nullable|image|mimes:jpeg,png,jpg,gif,svg|max:2048';
+            $rules['photo'] = 'nullable|image|mimes:jpeg,png,jpg,gif,svg';
         } else {
-            $rules['photo'] = 'required|image|mimes:jpeg,png,jpg,gif,svg|max:2048';
+            $rules['photo'] = 'required|image|mimes:jpeg,png,jpg,gif,svg';
         }
-    
+
         return $rules;
     }
 

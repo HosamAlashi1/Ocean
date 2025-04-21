@@ -22,7 +22,7 @@ class UpdateAdminRequest extends FormRequest
             'name_ar' => 'required|string|max:255',
             'email' => 'required|email',
             'password' => 'nullable|string|min:6|confirmed',
-            'photo' => 'nullable|image|mimes:jpeg,png,jpg,gif,svg|max:2048',
+            'photo' => 'nullable|image|mimes:jpeg,png,jpg,gif,svg',
             Rule::unique('users', 'email')->ignore($this->id),
         ];
     }
