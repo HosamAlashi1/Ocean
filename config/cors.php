@@ -6,10 +6,7 @@ return [
 
     'allowed_methods' => ['*'],
 
-    'allowed_origins' => [
-        'http://localhost:5174',          // للـ React أثناء التطوير
-        'https://ocean-it.net/',   // ضع هنا دومين React الحقيقي بعد الرفع
-    ],
+    'allowed_origins' => ['*'],
 
     'allowed_origins_patterns' => [],
 
