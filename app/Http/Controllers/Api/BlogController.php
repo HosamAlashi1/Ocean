@@ -39,7 +39,7 @@ class BlogController extends Controller
                 ->select('key_id', "{$title_col} as title", 'value')
                 ->get();
 
-            $query = Blog::select('id', 'image', "{$title_col} as title", "{$desc_col} as description", 'date')
+            $query = Blog::select('id', 'image' , 'image_ar', "{$title_col} as title", "{$desc_col} as description", 'date')
                 ->orderByDesc('id');
 
             if ($tag) {
@@ -54,9 +54,11 @@ class BlogController extends Controller
             $blogs = $query->skip($skip)
                 ->take($size)
                 ->get()
-                ->transform(function ($blog) {
-                    $blog->image = $blog->image ? asset($blog->image) : null;
-                    $blog->date = Carbon::parse($blog->date)->format('F j, Y'); // ✅ Format the date
+                ->transform(function ($blog) use ($lang) {
+                    $imageToUse = $lang === 'ar' && $blog->image_ar ? $blog->image_ar : $blog->image;
+                    $blog->image = $imageToUse ? asset($imageToUse) : null;
+                    $blog->date = Carbon::parse($blog->date)->format('F j, Y');
+                    unset($blog->image_ar); // optional: hide internal field
                     return $blog;
                 });
 
@@ -116,17 +118,20 @@ class BlogController extends Controller
         $related_blogs = Blog::where('id', '!=', $id)
             ->inRandomOrder()
             ->limit(6)
-            ->select('id', 'image', "{$title_col} as title")
+            ->select('id', 'image', 'image_ar', "{$title_col} as title")
             ->get()
-            ->transform(function ($related) {
-                $related->image = $related->image ? asset($related->image) : null;
+            ->transform(function ($related) use ($lang) {
+                $imageToUse = $lang === 'ar' && $related->image_ar ? $related->image_ar : $related->image;
+                $related->image = $imageToUse ? asset($imageToUse) : null;
+                unset($related->image_ar); // optional
                 return $related;
             });
+
 
         return sendResponse([
             'blog' => [
                 'id' => $blog->id,
-                'image' => $blog->image ? asset($blog->image) : null,
+                'image' => $lang === 'ar' && $blog->image_ar ? asset($blog->image_ar) : asset($blog->image),
                 'title' => $blog->title,
                 'description' => $blog->description,
                 'content' => $blog->content,

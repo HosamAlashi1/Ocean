@@ -186,25 +186,57 @@
                                         </div>
                                     </div>
 
-                                    <div class="col-12">
+                                    <div class="col-md-6 col-12">
                                         <div class="form-group">
-                                            <label for="customFile">{{__('general.Image')}}</label>
+                                            <label for="customFile">{{ __('general.Image') }}</label>
                                             <small class="text-muted">({{ __('general.Optional') }})</small>
                                             <div class="custom-file">
                                                 <input
                                                     name="photo"
                                                     type="file"
-                                                    multiple
                                                     class="custom-file-input @error('photo') is-invalid @else {{ old('photo') ? 'is-valid' : '' }} @enderror"
                                                     id="customFile"
                                                 />
-                                                <label class="custom-file-label" for="customFile">{{__('general.Choose file')}}</label>
+                                                <label class="custom-file-label" for="customFile">{{ __('general.Choose file') }}</label>
                                             </div>
                                             @error('photo')
                                             <span class="col-form-label-sm text-danger">{{ $message }}</span>
                                             @enderror
+
+                                            @if(isset($blog) && $blog->image)
+                                                <div class="mt-2">
+                                                    <img src="{{ asset($blog->image) }}" alt="Current Image" class="img-thumbnail" style="max-height: 120px;">
+                                                </div>
+                                            @endif
                                         </div>
                                     </div>
+
+                                    <div class="col-md-6 col-12">
+                                        <div class="form-group">
+                                            <label for="customFileAr">{{ __('general.Image') }} ({{ __('general.Arabic') }})</label>
+                                            <small class="text-muted">({{ __('general.Optional') }})</small>
+                                            <div class="custom-file">
+                                                <input
+                                                    name="photo_ar"
+                                                    type="file"
+                                                    class="custom-file-input @error('photo_ar') is-invalid @else {{ old('photo_ar') ? 'is-valid' : '' }} @enderror"
+                                                    id="customFileAr"
+                                                />
+                                                <label class="custom-file-label" for="customFileAr">{{ __('general.Choose file') }}</label>
+                                            </div>
+                                            @error('photo_ar')
+                                            <span class="col-form-label-sm text-danger">{{ $message }}</span>
+                                            @enderror
+
+                                            @if(isset($blog) && $blog->image_ar)
+                                                <div class="mt-2">
+                                                    <img src="{{ asset($blog->image_ar) }}" alt="Current Arabic Image" class="img-thumbnail" style="max-height: 120px;">
+                                                </div>
+                                            @endif
+                                        </div>
+                                    </div>
+
+
 
                                     <div class="col-12" id="content-area1" style="display: {{ old('way_to_add_blog') === 'short_link' ? 'none' : 'block' }};">
                                         <div class="form-group">

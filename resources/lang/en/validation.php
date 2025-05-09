@@ -13,6 +13,7 @@ return [
     'regex' => 'The :attribute format is invalid.',
 
     'attributes' => [
+        'photo_ar' => 'Image (AR)',
         'content' => 'Content (EN)',
         'content_ar' => 'Content (AR)',
         'tags' => 'Tags',

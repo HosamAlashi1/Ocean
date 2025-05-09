@@ -40,8 +40,10 @@ class BlogRequest extends FormRequest
 
         if ($this->route()->getName() === 'blog.update') {
             $rules['photo'] = 'nullable|image|mimes:jpeg,png,jpg,gif,svg';
+            $rules['photo_ar'] = 'nullable|image|mimes:jpeg,png,jpg,gif,svg';
         } else {
             $rules['photo'] = 'required|image|mimes:jpeg,png,jpg,gif,svg';
+            $rules['photo_ar'] = 'required|image|mimes:jpeg,png,jpg,gif,svg';
         }
 
         return $rules;
@@ -105,6 +107,13 @@ class BlogRequest extends FormRequest
             'photo.image' => trans('validation.image', ['attribute' => trans('validation.attributes.photo')]),
             'photo.mimes' => trans('validation.mimes', ['attribute' => trans('validation.attributes.photo')]),
             'photo.max' => trans('validation.max', ['attribute' => trans('validation.attributes.photo'), 'max' => 2048]),
+
+            // Image (AR)
+            'photo_ar.required' => trans('validation.required', ['attribute' => trans('validation.attributes.photo_ar')]),
+            'photo_ar.image' => trans('validation.image', ['attribute' => trans('validation.attributes.photo_ar')]),
+            'photo_ar.mimes' => trans('validation.mimes', ['attribute' => trans('validation.attributes.photo_ar')]),
+            'photo_ar.max' => trans('validation.max', ['attribute' => trans('validation.attributes.photo_ar'), 'max' => 2048]),
+
         ];
     }
 

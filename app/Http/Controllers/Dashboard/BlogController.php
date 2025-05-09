@@ -46,8 +46,9 @@ class BlogController extends Controller
         try {
             DB::beginTransaction();
 
-            // Upload image
+            // Upload images
             $image_path = $this->uploadImage('admin', $request->file('photo'));
+            $image_ar_path = $this->uploadImage('admin', $request->file('photo_ar'));
 
             // Create blog
             $blog = Blog::create([
@@ -58,6 +59,7 @@ class BlogController extends Controller
                 'date' => $request->input('date'),
                 'by' => $request->input('by'),
                 'image' => $image_path,
+                'image_ar' => $image_ar_path,
                 'content_en' => $request->input('content'),
                 'content_ar' => $request->input('content_ar'),
             ]);
@@ -134,21 +136,28 @@ class BlogController extends Controller
      */
     public function update(BlogRequest $request, Blog $blog)
     {
-//        try {
+        try {
             DB::beginTransaction();
 
-            // Only update image if changed
+            // Update image (EN)
             if ($request->hasFile('photo')) {
-                // Safely delete old image
                 $oldPath = public_path($blog->image);
                 if ($blog->image && is_file($oldPath)) {
                     @unlink($oldPath);
                 }
-
                 $blog->image = $this->uploadImage('admin', $request->file('photo'));
             }
 
-            // Only update dirty fields to avoid unnecessary writes
+            // Update image (AR)
+            if ($request->hasFile('photo_ar')) {
+                $oldArPath = public_path($blog->image_ar);
+                if ($blog->image_ar && is_file($oldArPath)) {
+                    @unlink($oldArPath);
+                }
+                $blog->image_ar = $this->uploadImage('admin', $request->file('photo_ar'));
+            }
+
+            // Fill other fields
             $blog->fill([
                 'title_en' => $request->input('title'),
                 'title_ar' => $request->input('title_ar'),
@@ -164,23 +173,19 @@ class BlogController extends Controller
                 $blog->save();
             }
 
-            // Sync tags if they changed
+            // Sync tags
             $newTags = $request->input('tags', []);
             $currentTags = $blog->tags()->pluck('tags.id')->toArray();
-
             if (array_diff($newTags, $currentTags) || array_diff($currentTags, $newTags)) {
                 $blog->tags()->sync($newTags);
             }
 
-
-        // Update details only if necessary
+            // Update details
             $newDetails = collect($request->input('details', []))
                 ->filter(fn($detail) => !empty($detail['url']) || !empty($detail['key_url_en']) || !empty($detail['key_url_ar']))
                 ->values();
 
-            // If there are differences in count or data, refresh details
-            $currentDetailsCount = $blog->details()->count();
-            if ($currentDetailsCount !== $newDetails->count()) {
+            if ($blog->details()->count() !== $newDetails->count()) {
                 $blog->details()->delete();
                 foreach ($newDetails as $detail) {
                     $blog->details()->create([
@@ -195,12 +200,11 @@ class BlogController extends Controller
             session()->flash('success', __('messages.updated successfully.'));
             return redirect()->route('blog.index');
 
-//        } catch (\Exception $ex) {
-//            DB::rollBack();
-//            // Optionally: Log::error($ex);
-//            session()->flash('error', __('messages.An error occurred while updating the blog. Please try again.'));
-//            return redirect()->back()->withInput();
-//        }
+        } catch (\Exception $ex) {
+            DB::rollBack();
+            session()->flash('error', __('messages.An error occurred while updating the blog. Please try again.'));
+            return redirect()->back()->withInput();
+        }
     }
 
 

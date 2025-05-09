@@ -13,6 +13,7 @@
       'regex' => 'تنسيق :attribute غير صالح.',
 
       'attributes' => [
+          'photo_ar' => 'الصورة العربية',
           'content' => 'المحتوى (EN)',
           'content_ar' => 'المحتوى (AR)',
           'tags' => 'العلامات',

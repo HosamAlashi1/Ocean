@@ -13,6 +13,7 @@ return [
     'Name in arabic' => 'الاسم بالعربية',
     'Reset' => 'إعادة تعيين',
     'Optional'=>'اختياري',
+    'Arabic'=>'العربية',
     'Update Tag'=>'تحديث الوسم',
     'subscribers'=>'طلبات اشتراك',
     'Submit' => 'إرسال',

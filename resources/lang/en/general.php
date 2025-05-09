@@ -13,6 +13,7 @@ return[
     'Name in english'=>'Name in english',
     'Name in arabic'=>'Name in arabic',
     'Reset'=>'Reset',
+    'Arabic'=>'Arabic',
     'Submit'=>'Submit',
     'Update Admin'=>'Update Admin',
     'Update'=>'Update',
