@@ -12,7 +12,7 @@ class AboutController extends Controller
 
     public function list(Request $request)
     {
-        $lang = $request->header('lang');
+        $lang = $request->header('lang') ?? 'en';
         $supported_langs = ['en', 'ar'];
 
         if (!$lang || !in_array($lang, $supported_langs)) {

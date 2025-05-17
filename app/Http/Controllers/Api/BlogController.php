@@ -13,7 +13,7 @@ class BlogController extends Controller
 
     public function list(Request $request)
     {
-        $lang = $request->header('lang');
+        $lang = $request->header('lang') ?? 'en';
         $supported_langs = ['en', 'ar'];
 
         if (!$lang || !in_array($lang, $supported_langs)) {
@@ -81,7 +81,7 @@ class BlogController extends Controller
 
     public function details(Request $request, $id)
     {
-        $lang = $request->header('lang');
+        $lang = $request->header('lang') ?? 'en';
         $supported_langs = ['en', 'ar'];
 
         if (!$lang || !in_array($lang, $supported_langs)) {

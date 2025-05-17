@@ -12,7 +12,7 @@ class ProjectController extends Controller
 
     public function list(Request $request)
     {
-        $lang = $request->header('lang');
+        $lang = $request->header('lang') ?? 'en';
 
         if (!in_array($lang, ['en', 'ar'])) {
             return sendError('Unsupported language', [
