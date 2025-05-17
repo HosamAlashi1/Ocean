@@ -14,7 +14,7 @@ class HomeController extends Controller
 
     public function index(Request $request)
     {
-        $lang = $request->header('lang');
+        $lang = $request->header('lang') ?? 'en';
 
         if (!in_array($lang, ['en', 'ar'])) {
             return sendError('you must send the lang on the header ,Unsupported language', [
@@ -58,7 +58,7 @@ class HomeController extends Controller
             $recent_services = Service::where('show_on_recent_work', true)
                 ->whereHas('works')
                 ->select($selects['services_with_id'])
-                ->with(['works' => fn($q) => $q->select('id', 'image', 'service_id')->orderByDesc('id')->limit(6)])
+                ->with(['works' => fn($q) => $q->select('id', 'image', 'service_id')->orderByDesc('id')])
                 ->get()
                 ->transform(function ($service) {
                     $service->image = $service->image ? asset($service->image) : null;
@@ -67,7 +67,8 @@ class HomeController extends Controller
                         return $work;
                     });
                     return $service;
-                });
+                }); 
+                // return $recent_services;
 
             $process_steps = Process::select($selects['processes'])
                 ->orderByDesc('id')
