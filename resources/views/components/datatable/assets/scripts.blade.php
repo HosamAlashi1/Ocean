@@ -158,11 +158,12 @@
 
         Swal.fire({
             imageUrl: fullImageUrl,
+            imageAlt: 'Preview',
             showConfirmButton: false,
             showCloseButton: true,
-            background: 'white',
-            padding: '0px 0px 30px 0px',
-            width: '447px',
+            background: '#fff',
+            width: 'auto',
+            padding: '0px 0px 20px 0px',
             customClass: {
                 popup: 'image-preview-popup',
                 image: 'image-preview-img',
@@ -171,3 +172,4 @@
         });
     });
 </script>
+

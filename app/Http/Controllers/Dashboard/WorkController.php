@@ -35,14 +35,16 @@ class WorkController extends Controller
         try {
             DB::beginTransaction();
 
-            $imagePath = null;
-            if ($request->hasFile('photo')) {
-                $imagePath = $this->uploadImage('admin', $request->file('photo'));
+            $filePath = null;
+            if ($request->hasFile('file')) {
+                $type = str_starts_with($request->file('file')->getMimeType(), 'video') ? 'video' : 'image';
+                $filePath = $this->uploadImage('admin', $request->file('file'));
             }
 
             $work = Work::create([
                 'service_id' => $request->input('service_id'),
-                'image' => $imagePath,
+                'type' => $type,
+                'image' => $filePath,
             ]);
 
             DB::commit();
@@ -95,8 +97,9 @@ class WorkController extends Controller
                 'service_id' => $request->input('service_id'),
             ];
 
-            if ($request->hasFile('photo')) {
-                $data['image'] = $this->uploadImage('admin', $request->file('photo'));
+            if ($request->hasFile('file')) {
+                $data['type'] = str_starts_with($request->file('file')->getMimeType(), 'video') ? 'video' : 'image';
+                $data['image'] = $this->uploadImage('admin', $request->file('file'));
             }
 
             $work->update($data);
@@ -119,10 +122,22 @@ class WorkController extends Controller
     public function destroy(Work $work)
     {
         try {
+            // حذف الملف من السيرفر إذا كان موجودًا
+            if ($work->image && file_exists(public_path(basename($work->image)))) {
+                @unlink(public_path(basename($work->image)));
+            }
+
             $work->delete();
-            return response()->json(['success' => true, 'message' => __('messages.deleted successfully.')]);
+
+            return response()->json([
+                'success' => true,
+                'message' => __('messages.deleted successfully.')
+            ]);
         } catch (\Exception $ex) {
-            return response()->json(['success' => false, 'message' => __('messages.error_deleting')], 500);
+            return response()->json([
+                'success' => false,
+                'message' => __('messages.error_deleting')
+            ], 500);
         }
     }
 }

@@ -19,13 +19,13 @@
 
     <div class="swal2-inline-group">
         <label class="swal2-inline-label">
-            {{ __('general.Image') }}
+            {{ __('general.File') }}
         <small class="text-muted">({{ __('general.Optional') }})</small>
         </label>
-        <input type="file" id="photo" class="swal2-input swal2-inline-input" accept="image/*">
+        <input type="file" id="file" class="swal2-input swal2-inline-input"
+               accept="image/*,video/mp4,video/quicktime,video/x-msvideo,video/x-ms-wmv,video/x-flv,video/webm,video/3gpp,video/ogg,video/mpeg">
     </div>
 `;
-
 
         Swal.fire({
             title: "{{ __('general.Update Work') }}",
@@ -34,16 +34,13 @@
             confirmButtonText: "{{ __('general.save') }}",
             cancelButtonText: "{{ __('general.cancel') }}",
             background: 'var(--swal-background)',
-            // customClass: { popup: 'swal-custom-modal' },
             width: '600px',
             didOpen: () => {
-                // Step 1: Fetch the work
                 $.get(editUrl).then(res => {
                     if (!res.success) throw new Error("Item not found");
 
                     const item = res.data;
 
-                    // Step 2: Fetch services (from cache or fresh)
                     return loadServices(item.service_id).then(optionsHtml => {
                         $('#service-loader').remove();
                         $('#service_id').html(optionsHtml);
@@ -56,14 +53,14 @@
             },
             preConfirm: () => {
                 const serviceId = $('#service_id').val();
-                const photo = $('#photo')[0].files[0];
+                const file = $('#file')[0].files[0];
 
                 if (!serviceId) {
                     Swal.showValidationMessage("{{ __('general.fill_the_field_required') }}");
                     return false;
                 }
 
-                return { service_id: serviceId, photo }; // photo can be undefined (optional)
+                return { service_id: serviceId, file }; // file can be undefined (optional)
             }
         }).then(result => {
             if (result.value) {
@@ -71,8 +68,8 @@
                 formData.append('_token', "{{ csrf_token() }}");
                 formData.append('_method', 'PUT');
                 formData.append('service_id', result.value.service_id);
-                if (result.value.photo) {
-                    formData.append('photo', result.value.photo);
+                if (result.value.file) {
+                    formData.append('file', result.value.file);
                 }
 
                 $.post({

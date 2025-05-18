@@ -149,7 +149,7 @@
             box-shadow: 0 0 10px 1px rgba(115, 103, 240, 0.7);
         }
 
-        .datatable_img {
+        .datatable_img , .datatable_media{
             border: 1px solid #dcdcdc;
             padding: 1px;
             border-radius: 100%;

@@ -9,6 +9,7 @@ return [
     'Name' => 'الاسم',
     'Add Admin' => 'إضافة مسؤول',
     'Admin' => 'مسؤول',
+    'file'=>'ملف',
     'Name in english' => 'الاسم بالإنجليزية',
     'Name in arabic' => 'الاسم بالعربية',
     'Reset' => 'إعادة تعيين',

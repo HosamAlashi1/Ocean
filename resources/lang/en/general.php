@@ -10,6 +10,7 @@ return[
     'Update Tag'=>'Update Tag',
     'Add Admin'=>'Add Admin',
     'Admin'=>'Admin',
+    'file'=>'File',
     'Name in english'=>'Name in english',
     'Name in arabic'=>'Name in arabic',
     'Reset'=>'Reset',

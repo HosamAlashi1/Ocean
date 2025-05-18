@@ -38,12 +38,13 @@ class ProjectController extends Controller
             $services = Service::where('show_on_recent_work', true)
                 ->whereHas('works')
                 ->select($selects['services_with_id'])
-                ->with(['works' => fn($q) => $q->select('id', 'image', 'service_id')->orderByDesc('id')])
+                ->with(['works' => fn($q) => $q->select('id', 'type', 'image', 'service_id')->orderByDesc('id')])
                 ->get()
                 ->transform(function ($service) {
                     $service->image = $service->image ? asset($service->image) : null;
                     $service->works = $service->works->map(function ($work) {
                         $work->image = $work->image ? asset($work->image) : null;
+                        $work->type = $work->type ?? 'image';
                         return $work;
                     });
                     return $service;

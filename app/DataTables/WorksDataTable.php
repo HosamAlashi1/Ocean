@@ -26,8 +26,11 @@ class WorksDataTable extends DataTable
         $locale = app()->getLocale();
 
         return (new EloquentDataTable($query))
-            ->editColumn('image', function ($admin) {
-                return view('components.datatable.image', ['photo' => $admin->image])->render();
+            ->editColumn('image', function ($work) {
+                return view('dashboard.works.media', [
+                    'file' => $work->image,
+                    'type' => $work->type
+                ])->render();
             })
             ->addColumn('service_name', fn($work) =>
             optional($work->service)->{"title_{$locale}"} // safe accessor
@@ -70,7 +73,7 @@ class WorksDataTable extends DataTable
     {
         return $model->newQuery()
             ->with('service') // prevent N+1 query problem
-            ->select(['id', 'service_id', 'image', 'created_at']);
+            ->select(['id' ,'type', 'service_id', 'image', 'created_at']);
     }
 
     /**

@@ -18,8 +18,9 @@
     </div>
 
     <div class="swal2-inline-group">
-        <label class="swal2-inline-label">{{ __('general.Image') }}</label>
-        <input type="file" id="photo" class="swal2-input swal2-inline-input" accept="image/*">
+        <label class="swal2-inline-label">{{ __('general.file') }}</label>
+        <input type="file" id="file" class="swal2-input swal2-inline-input"
+               accept="image/*,video/mp4,video/quicktime,video/x-msvideo,video/x-ms-wmv,video/x-flv,video/webm,video/3gpp,video/ogg,video/mpeg">
     </div>
 `;
 
@@ -45,18 +46,18 @@
             },
             preConfirm: () => {
                 const serviceId = $('#service_id').val();
-                const photo = $('#photo')[0].files[0];
-                if (!serviceId || !photo) {
+                const file = $('#file')[0].files[0];
+                if (!serviceId || !file) {
                     Swal.showValidationMessage("{{ __('general.fill_all_fields') }}");
                 }
-                return { service_id: serviceId, photo };
+                return { service_id: serviceId, file };
             }
         }).then(result => {
             if (result.value) {
                 const formData = new FormData();
                 formData.append('_token', "{{ csrf_token() }}");
                 formData.append('service_id', result.value.service_id);
-                formData.append('photo', result.value.photo);
+                formData.append('file', result.value.file); // ✅ updated name
 
                 $.post({
                     url: "{{ route('work.store') }}",

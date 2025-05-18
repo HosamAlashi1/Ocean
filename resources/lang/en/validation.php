@@ -14,6 +14,7 @@ return [
 
     'attributes' => [
         'photo_ar' => 'Image (AR)',
+        'file' => 'File',
         'content' => 'Content (EN)',
         'content_ar' => 'Content (AR)',
         'tags' => 'Tags',

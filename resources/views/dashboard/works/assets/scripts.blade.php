@@ -37,3 +37,42 @@
 
 {{--// delete modal--}}
 @include('dashboard.works.assets.modals.delete')
+
+{{-- dipaly media (image or video) --}}
+<script>
+    $(document).on('click', '.datatable_media', function () {
+        const fileType = $(this).data('type');
+        const fileSrc = $(this).data('src');
+
+        if (fileType === 'image') {
+            Swal.fire({
+                imageUrl: fileSrc,
+                imageAlt: 'Preview',
+                showConfirmButton: false,
+                showCloseButton: true,
+                background: '#fff',
+                width: 'auto',
+                padding: '0px 0px 20px 0px',
+                customClass: {
+                    popup: 'image-preview-popup',
+                    image: 'image-preview-img',
+                    closeButton: 'image-preview-close'
+                }
+            });
+        } else if (fileType === 'video') {
+            Swal.fire({
+                html: `
+                    <video controls style="width: 100%; max-height: 400px; border-radius: 10px;">
+                        <source src="${fileSrc}" type="video/mp4">
+                        Your browser does not support the video tag.
+                    </video>
+                `,
+                showConfirmButton: false,
+                showCloseButton: true,
+                background: '#000',
+                width: 600,
+                padding: '0 0 20px 0'
+            });
+        }
+    });
+</script>
