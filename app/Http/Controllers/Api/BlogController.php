@@ -39,6 +39,8 @@ class BlogController extends Controller
                 ->select('key_id', "{$title_col} as title", 'value')
                 ->get();
 
+            $seo_settings = getSeoSettings('blog', $lang);
+
             $query = Blog::select('id', 'image' , 'image_ar', "{$title_col} as title", "{$desc_col} as description", 'date')
                 ->orderByDesc('id');
 
@@ -65,6 +67,7 @@ class BlogController extends Controller
             return sendResponse([
                 'blogs' => $blogs,
                 'blog_settings' => $settings,
+                'seo_settings' => $seo_settings,
                 'pagination' => [
                     'total' => $total,
                     'page' => $page,
@@ -127,6 +130,7 @@ class BlogController extends Controller
                 return $related;
             });
 
+        $seo_settings = getSeoSettings('blog', $lang);
 
         return sendResponse([
             'blog' => [
@@ -147,6 +151,7 @@ class BlogController extends Controller
                 ])->values()
             ],
             'related_blogs' => $related_blogs,
+            'seo_settings' => $seo_settings,
         ], 'Blog details retrieved successfully.');
     }
 

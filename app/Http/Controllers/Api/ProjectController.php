@@ -35,6 +35,8 @@ class ProjectController extends Controller
                 ->select($selects['settings'])
                 ->get();
 
+            $seo_settings = getSeoSettings('projects', $lang);
+
             $services = Service::where('show_on_recent_work', true)
                 ->whereHas('works')
                 ->select($selects['services_with_id'])
@@ -52,6 +54,7 @@ class ProjectController extends Controller
 
             return sendResponse(compact(
                 'projects_settings',
+                'seo_settings',
                 'services'
             ), 'Projects data loaded successfully.');
         } catch (\Throwable $e) {

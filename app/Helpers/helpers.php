@@ -1,6 +1,7 @@
 <?php
 
 
+use App\Models\Setting;
 
 function sendResponse($result, $message = null)
 {
@@ -33,4 +34,21 @@ function sendError($error = 'error', $errorMessages = [], $code = 200 , )
 
     return response()->json($response, $code);
 }
+ function getSeoSettings(string $page, string $lang): array
+{
+    $keys = [
+        "{$page}_seo_title_{$lang}",
+        "{$page}_seo_description_{$lang}",
+    ];
+
+    $seo_items = Setting::where('set_group', 'seo')
+        ->whereIn('key_id', $keys)
+        ->pluck('value', 'key_id');
+
+    return [
+        'title' => $seo_items[$keys[0]] ?? '',
+        'description' => $seo_items[$keys[1]] ?? '',
+    ];
+}
+
 

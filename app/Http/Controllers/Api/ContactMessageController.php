@@ -34,9 +34,11 @@ class ContactMessageController extends Controller
                 ->select($selects['settings'])
                 ->get();
 
+            $seo_settings = getSeoSettings('contact', $lang);
 
             return sendResponse(compact(
                 'Contact_settings',
+                'seo_settings'
             ), 'Contact settings loaded successfully');
         } catch (\Throwable $e) {
             return sendError('Failed to load homepage data', $e->getMessage(), 500);

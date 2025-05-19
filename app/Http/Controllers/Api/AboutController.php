@@ -47,6 +47,8 @@ class AboutController extends Controller
                     return $setting;
                 });
 
+            $seo_settings = getSeoSettings('about', $lang);
+
             // Get all members with localized fields
             $members = Member::select($selects['members'])
                 ->orderByDesc('id')
@@ -58,6 +60,7 @@ class AboutController extends Controller
 
             return sendResponse(compact(
                 'about_settings',
+                'seo_settings',
                 'members'
             ), 'Data loaded successfully.');
 

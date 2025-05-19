@@ -43,8 +43,12 @@ class HowWeWorkController extends Controller
                     return $setting;
                 });
 
+            $seo_settings = getSeoSettings('howitworks', $lang);
+
+
             return sendResponse(compact(
                 'how_we_work_settings',
+                'seo_settings'
             ), 'Data loaded successfully.');
 
         } catch (\Throwable $e) {
