@@ -108,3 +108,12 @@ Route::group(
 
 });
 
+Route::get('/deploy', function (\Illuminate\Http\Request $request) {
+    if ($request->query('token') !== 'h5sam1234') {
+        abort(403, 'Unauthorized.');
+    }
+
+    $output = shell_exec('cd ' . base_path() . ' && git pull origin main && php artisan migrate --force && php artisan config:cache && php artisan route:cache');
+
+    return response("<pre>$output</pre>", 200)->header('Content-Type', 'text/plain');
+});
