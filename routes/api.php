@@ -5,6 +5,7 @@ use App\Http\Controllers\Api\BlogController;
 use App\Http\Controllers\Api\HomeController;
 use App\Http\Controllers\Api\HowWeWorkController;
 use App\Http\Controllers\Api\ProjectController;
+use App\Http\Controllers\Api\SeoController;
 use App\Http\Controllers\Api\SubscribeController;
 use App\Http\Controllers\Api\ContactMessageController;
 use Illuminate\Http\Request;
@@ -37,3 +38,6 @@ Route::get('/how-it-work',[HowWeWorkController::class,'list']);
 
 Route::get('/contact-us',[ContactMessageController::class,'list']);
 Route::post('/contact-us',[ContactMessageController::class,'add']);
+
+Route::get('/sitemap.xml', [SeoController::class, 'sitemap']);
+
