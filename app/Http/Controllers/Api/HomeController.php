@@ -60,17 +60,22 @@ class HomeController extends Controller
         $recent_services = Service::where('show_on_recent_work', true)
             ->whereHas('works')
             ->select($selects['services_with_id'])
-            ->with(['works' => fn($q) => $q->select('id','type', 'image', 'service_id')->orderByDesc('id')])
             ->get()
-            ->transform(function ($service) {
+            ->each(function ($service) {
+                $service->load(['works' => function ($q) {
+                    $q->select('id', 'type', 'image', 'service_id')
+                        ->orderByDesc('id')
+                        ->take(6);
+                }]);
+
                 $service->image = $service->image ? asset($service->image) : null;
                 $service->works = $service->works->map(function ($work) {
                     $work->image = $work->image ? asset($work->image) : null;
                     $work->type = $work->type ?? 'image';
                     return $work;
                 });
-                return $service;
             });
+
         // return $recent_services;
 
         $process_steps = Process::select($selects['processes'])
