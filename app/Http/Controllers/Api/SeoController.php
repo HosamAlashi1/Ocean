@@ -9,41 +9,54 @@ use App\Models\Blog;
 
 class SeoController extends Controller
 {
+
     public function sitemap()
     {
-        // هذا هو رابط الفرونت الأساسي
         $frontendDomain = 'https://ocean-it.net';
 
-        // روابط الصفحات الثابتة
+        // روابط ثابتة
         $staticUrls = [
             "{$frontendDomain}/",
-//            "{$frontendDomain}/#services",
             "{$frontendDomain}/projects",
             "{$frontendDomain}/about",
             "{$frontendDomain}/HowItWork",
             "{$frontendDomain}/blog",
         ];
 
-        // روابط ديناميكية: المدونات
-        $dynamicUrls = [];
-        $blogs = Blog::select('id')->get();
-        foreach ($blogs as $blog) {
-            $dynamicUrls[] = "{$frontendDomain}/blog-details/{$blog->id}";
+        // روابط المدونات
+        $dynamicUrls = Blog::select('id', 'updated_at')->get()->map(function ($blog) use ($frontendDomain) {
+            return [
+                'loc' => "{$frontendDomain}/blog-details/{$blog->id}",
+                'lastmod' => $blog->updated_at->toDateString(),
+            ];
+        })->toArray();
+
+        // دمج الكل
+        $allUrls = array_merge(
+            array_map(fn($url) => ['loc' => $url], $staticUrls),
+            $dynamicUrls
+        );
+
+        // توليد XML يدوي
+        $xml = '<?xml version="1.0" encoding="UTF-8"?>' . PHP_EOL;
+        $xml .= '<urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">' . PHP_EOL;
+
+        foreach ($allUrls as $url) {
+            $xml .= "  <url>" . PHP_EOL;
+            $xml .= "    <loc>{$url['loc']}</loc>" . PHP_EOL;
+            if (isset($url['lastmod'])) {
+                $xml .= "    <lastmod>{$url['lastmod']}</lastmod>" . PHP_EOL;
+            }
+            $xml .= "    <changefreq>weekly</changefreq>" . PHP_EOL;
+            $xml .= "    <priority>0.8</priority>" . PHP_EOL;
+            $xml .= "  </url>" . PHP_EOL;
         }
 
-        // لو بدك تضيف أعمال أو خدمات مستقبلاً:
-        // foreach (Service::select('id')->get() as $service) {
-        //     $dynamicUrls[] = "{$frontendDomain}/services/{$service->id}";
-        // }
+        $xml .= '</urlset>';
 
-        // دمج كل الروابط
-        $urls = array_merge($staticUrls, $dynamicUrls);
-
-        // توليد XML من View
-        $xml = View::make('seo.sitemap', compact('urls'))->render();
-
-        return Response::make($xml, 200)->header('Content-Type', 'application/xml');
+        return response($xml, 200)->header('Content-Type', 'application/xml');
     }
+
 
     public function blogPreview($id)
     {
