@@ -40,7 +40,7 @@ class SeoController extends Controller
         $urls = array_merge($staticUrls, $dynamicUrls);
 
         // توليد XML من View
-        $xml = View::make('sitemap', compact('urls'))->render();
+        $xml = View::make('seo.sitemap', compact('urls'))->render();
 
         return Response::make($xml, 200)->header('Content-Type', 'application/xml');
     }
