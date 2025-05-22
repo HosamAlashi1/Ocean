@@ -40,4 +40,5 @@ Route::get('/contact-us',[ContactMessageController::class,'list']);
 Route::post('/contact-us',[ContactMessageController::class,'add']);
 
 Route::get('/sitemap.xml', [SeoController::class, 'sitemap']);
+Route::get('/preview/blog/{id}', [SeoController::class, 'blogPreview']);
 

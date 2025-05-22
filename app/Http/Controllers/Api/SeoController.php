@@ -17,7 +17,7 @@ class SeoController extends Controller
         // روابط الصفحات الثابتة
         $staticUrls = [
             "{$frontendDomain}/",
-            "{$frontendDomain}/#services",
+//            "{$frontendDomain}/#services",
             "{$frontendDomain}/projects",
             "{$frontendDomain}/about",
             "{$frontendDomain}/HowItWork",
@@ -44,4 +44,26 @@ class SeoController extends Controller
 
         return Response::make($xml, 200)->header('Content-Type', 'application/xml');
     }
+
+    public function blogPreview($id)
+    {
+        $lang = app()->getLocale(); // or 'en'
+
+        $title_col = "title_$lang";
+        $desc_col = "desc_$lang";
+        $key_col = "key_url_$lang";
+        $content_col = "content_$lang";
+
+        $blog = Blog::with('details')->findOrFail($id);
+
+        $data = [
+            'title' => $blog->$title_col,
+            'description' => $blog->$desc_col,
+            'image' => asset($blog->image),
+            'url' => "https://ocean-it.net/blog-details/{$id}",
+        ];
+
+        return view('seo.blog-preview', $data);
+    }
+
 }
