@@ -110,4 +110,15 @@ class HomeController extends Controller
     }
 }
 
+    public function downloadCompanyProfile()
+    {
+        $filePath = public_path('files/company-profile.pdf');
+
+        if (!file_exists($filePath)) {
+            return sendError('File not found', [], 404);
+        }
+
+        return response()->download($filePath, 'company-profile.pdf');
+    }
+
 }
