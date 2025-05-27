@@ -32,7 +32,7 @@ class HomeController extends Controller
         'services'          => ['image', "$desc_column as description", "$title_column as title"],
         'services_with_id'  => ['id', "$title_column as title", "$desc_column as description", 'image'],
         'processes'         => ["$name_column as name", "$desc_column as description", 'image'],
-        'blogs'             => ['image', "$title_column as title"],
+        'blogs'             => ['id' ,'image', "$title_column as title"],
     ];
 
     try {
